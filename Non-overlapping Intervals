@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+    static bool comp(const pair<int,int>& a , const pair<int,int>& b)
+    {
+        return a.second < b.second;
+    }
+
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        vector<pair<int,int>> v;
+        int n = intervals.size();
+        for(int i=0;i<n;i++)
+        {
+            int a = intervals[i][0];
+            int b = intervals[i][1];
+
+            v.push_back({a,b});
+        }
+
+        sort(v.begin() , v.end() , comp);
+
+        int size = v.size();
+        int end = v[0].second;
+        int ans = 0;
+        for(int i=1;i<size;i++)
+        {
+            // int x = v[i].second;
+            // int y = v[i+1].first;
+            // if(x > y) ans++;
+            if(v[i].first < end)
+            {
+                ans++;
+            }
+            else
+            {
+                end = v[i].second;
+            }
+        }
+
+        return ans;
+    }
+};
