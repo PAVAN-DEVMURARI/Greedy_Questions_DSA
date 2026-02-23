@@ -1,0 +1,35 @@
+class Solution {
+public:
+
+    static bool comp(const pair<int,int>& a , const pair<int , int>& b)
+    {
+        if(a.first == b.first) return a.second < b.second;
+
+        return a.first < b.first;
+    }
+
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        vector<pair<int,int>> v;
+        int n = trips.size();
+        for(int i = 0; i < n; i++)
+        {
+            int p = trips[i][0];
+            int s = trips[i][1];
+            int e = trips[i][2];
+
+            v.push_back({s,p});
+            v.push_back({e,-p});
+        }
+
+        sort(v.begin() , v.end() , comp);
+        int seats = 0;
+
+        for(auto& a : v)
+        {
+            seats += a.second;
+            if(seats > capacity) return false;
+        }
+        return true;;
+        
+    }
+};
