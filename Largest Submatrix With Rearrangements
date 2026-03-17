@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int largestSubmatrix(vector<vector<int>>& matrix) {
+        int row = matrix.size();
+        int col = matrix[0].size();
+
+        int ans = 0;
+
+        //store the heights
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                if(matrix[i][j] == 1 && i>0)
+                    matrix[i][j] += matrix[i-1][j];
+            }
+
+            //extract each row 
+            vector<int> temp = matrix[i];
+            sort(temp.begin() , temp.end() , greater<int>());
+
+            // calculate the area
+            for(int i=0;i<temp.size();i++)
+            {
+                int base = i+1;
+                int height = temp[i];
+
+                ans = max(ans , base*height);
+            }
+        }
+
+        return ans;;
+    }
+};
+
+
+// 0 - 0 1 1
+// 1 - 0 1 0
+// 2 - 1 1 1
+
+
+// 3 fucking steps 
+//calculate the heights at each index if the box it 1
+//extract each row and sort it in descending order 
+//cal area for each extracted row and find the maximum
